@@ -17,6 +17,11 @@
         <img :src="g.creator.picture" alt="group creator image" class="rounded-circle elevation-1 mx-2" height="40">
       </div>
     </div>
+    {{ user }}
+    {{ identity }}
+    <button @click="test">
+      get Token
+    </button>
   </div>
 </template>
 
@@ -24,6 +29,7 @@
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { groupsService } from '../services/GroupsService'
+import { AuthService } from '../services/AuthService'
 
 export default {
   name: 'Home',
@@ -34,9 +40,14 @@ export default {
 
     return reactive({
       account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
+      identity: computed(() => AppState.identity),
       groups: computed(() => AppState.groups),
       joinGroup(g) {
         groupsService.joinGroup(g)
+      },
+      test() {
+        AuthService.getTokenWithPopup()
       }
     })
   }
